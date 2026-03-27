@@ -1,0 +1,110 @@
+<div class="home">
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-brand">
+      <span class="brand-icon">⬡</span>
+      <span class="brand-name">QueryAI</span>
+    </div>
+    <button class="nav-cta" (click)="goToQuery()">Launch App →</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Powered by Claude AI
+      </div>
+      <h1 class="hero-title">
+        Ask your database<br>
+        <span class="hero-accent">in plain English</span>
+      </h1>
+      <p class="hero-sub">
+        No SQL required. Type a question, get results instantly.<br>
+        QueryAI translates natural language into precise database queries.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" (click)="goToQuery()">
+          Start Querying
+          <span class="btn-arrow">→</span>
+        </button>
+      </div>
+
+      <!-- Terminal preview -->
+      <div class="terminal-preview">
+        <div class="terminal-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="terminal-title">queriai — query interface</span>
+        </div>
+        <div class="terminal-body">
+          <div class="terminal-line">
+            <span class="prompt">›</span>
+            <span class="terminal-text typing">Who are the top 5 customers by total spend?</span>
+          </div>
+          <div class="terminal-divider"></div>
+          <div class="terminal-result">
+            <div class="result-row header-row">
+              <span>NAME</span><span>COUNTRY</span><span>TOTAL SPEND</span>
+            </div>
+            <div class="result-row" *ngFor="let row of previewRows">
+              <span>{{ row.name }}</span>
+              <span>{{ row.country }}</span>
+              <span class="accent-val">{{ row.spend }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Instant Results</h3>
+        <p>Type your question and get structured data back in seconds. No query syntax to memorize.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Read-Only Safe</h3>
+        <p>Only SELECT queries are executed. Your data is never modified, no matter what you ask.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>Schema-Aware AI</h3>
+        <p>Claude understands your full database schema — tables, relationships, and columns — to generate accurate queries.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Example queries -->
+  <section class="examples">
+    <h2 class="section-title">Try these questions</h2>
+    <div class="examples-grid">
+      <button
+        class="example-card"
+        *ngFor="let ex of examples"
+        (click)="tryExample(ex.query)">
+        <span class="ex-icon">{{ ex.icon }}</span>
+        <div class="ex-content">
+          <span class="ex-label">{{ ex.label }}</span>
+          <span class="ex-query">{{ ex.query }}</span>
+        </div>
+        <span class="ex-arrow">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span class="brand-name">⬡ QueryAI</span>
+    <span class="footer-sep">·</span>
+    <span>Built with Spring Boot + Spring AI + Angular</span>
+  </footer>
+
+</div>

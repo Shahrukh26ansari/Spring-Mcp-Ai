@@ -1,0 +1,11 @@
+com\queriai\config\ProviderConfig.class
+com\queriai\dto\QueryResponse.class
+com\queriai\model\AiProvider.class
+com\queriai\config\CorsConfig.class
+com\queriai\controller\QueryController.class
+com\queriai\service\QueryService.class
+com\queriai\service\SchemaService.class
+com\queriai\QueryAiApplication.class
+com\queriai\dto\QueryRequest.class
+com\queriai\service\QueryService$1.class
+com\queriai\config\CorsConfig$1.class

@@ -1,0 +1,84 @@
+/* ================================================================
+   QueryAI — Global Styles
+   Theme: Dark data-terminal, industrial-refined
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap');
+
+:root {
+  --bg-base:        #080c10;
+  --bg-surface:     #0d1117;
+  --bg-elevated:    #161b22;
+  --bg-hover:       #1c2333;
+
+  --border:         #21262d;
+  --border-bright:  #30363d;
+
+  --accent:         #00e5a0;
+  --accent-dim:     rgba(0, 229, 160, 0.12);
+  --accent-glow:    rgba(0, 229, 160, 0.3);
+
+  --text-primary:   #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted:     #484f58;
+
+  --error:          #f85149;
+  --error-dim:      rgba(248, 81, 73, 0.1);
+
+  --font-display:   'Syne', sans-serif;
+  --font-mono:      'Space Mono', monospace;
+
+  --radius-sm:      4px;
+  --radius-md:      8px;
+  --radius-lg:      12px;
+
+  --transition:     150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Selection */
+::selection {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+a:hover { opacity: 0.8; }
+
+button {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  border: none;
+  outline: none;
+}
+
+input, textarea {
+  font-family: var(--font-mono);
+  outline: none;
+}

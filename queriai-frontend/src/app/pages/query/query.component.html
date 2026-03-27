@@ -1,0 +1,170 @@
+<div class="query-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header" (click)="goHome()">
+      <span class="brand-icon">⬡</span>
+      <span class="brand-name">QueryAI</span>
+    </div>
+
+    <!-- Provider selector -->
+    <div class="sidebar-section">
+      <div class="sidebar-label">AI Provider</div>
+
+      <div class="provider-loading" *ngIf="providersLoading">
+        <span class="mini-spinner"></span> Loading...
+      </div>
+
+      <div class="provider-list" *ngIf="!providersLoading">
+        <button
+          class="provider-card"
+          *ngFor="let p of providers"
+          [class.active]="selectedProvider === p.key"
+          (click)="selectProvider(p.key)">
+          <span class="provider-icon">{{ getIcon(p.key) }}</span>
+          <div class="provider-info">
+            <span class="provider-name">{{ p.displayName }}</span>
+            <span class="provider-model">{{ p.model }}</span>
+          </div>
+          <span class="provider-check" *ngIf="selectedProvider === p.key">✓</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="sidebar-section">
+      <div class="sidebar-label">Suggestions</div>
+      <button
+        class="suggestion-item"
+        *ngFor="let s of suggestions"
+        (click)="useSuggestion(s)">
+        <span class="sug-icon">›</span>
+        {{ s }}
+      </button>
+    </div>
+
+    <!-- History -->
+    <div class="sidebar-section" *ngIf="history.length > 0">
+      <div class="sidebar-label sidebar-label-row">
+        History
+        <button class="clear-btn" (click)="clearHistory()">Clear</button>
+      </div>
+      <button
+        class="history-item"
+        *ngFor="let item of history"
+        (click)="useHistory(item)">
+        <span class="history-provider-badge">{{ getIcon(item.provider) }}</span>
+        <div class="history-content">
+          <span class="history-q">{{ item.question }}</span>
+          <span class="history-meta">{{ item.response.rowCount }} rows · {{ item.response.providerDisplayName }}</span>
+        </div>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- Active provider banner -->
+    <div class="provider-banner" *ngIf="!providersLoading">
+      <span class="banner-icon">{{ getIcon(selectedProvider) }}</span>
+      <span class="banner-text">
+        Using <strong>{{ getDisplayName(selectedProvider) }}</strong>
+        <span class="banner-model">· {{ getModel(selectedProvider) }}</span>
+      </span>
+      <span class="banner-tag">SQL Generator</span>
+    </div>
+
+    <!-- Input area -->
+    <div class="input-area">
+      <div class="input-wrap" [class.focused]="inputFocused">
+        <span class="input-prompt">›</span>
+        <textarea
+          class="query-input"
+          [(ngModel)]="question"
+          placeholder="Ask anything about your data..."
+          (keydown)="onKeydown($event)"
+          (focus)="inputFocused = true"
+          (blur)="inputFocused = false"
+          rows="2">
+        </textarea>
+        <button
+          class="submit-btn"
+          (click)="submit()"
+          [disabled]="loading || !question.trim()">
+          <span *ngIf="!loading">Run ↵</span>
+          <span *ngIf="loading" class="spinner"></span>
+        </button>
+      </div>
+      <div class="input-hint">Press Enter to run · Shift+Enter for new line</div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-area">
+
+      <!-- Loading -->
+      <div class="state-loading" *ngIf="loading">
+        <div class="loading-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="loading-text">
+          {{ getDisplayName(selectedProvider) }} is generating SQL...
+        </span>
+      </div>
+
+      <!-- Error -->
+      <div class="state-error" *ngIf="result?.error && !loading">
+        <span class="error-icon">⚠</span>
+        <div>
+          <div class="error-title">Query failed</div>
+          <div class="error-msg">{{ result!.error }}</div>
+        </div>
+      </div>
+
+      <!-- Empty -->
+      <div class="state-empty" *ngIf="result && !result.error && result.rowCount === 0 && !loading">
+        <span class="empty-icon">○</span>
+        <div class="empty-title">No results found</div>
+        <div class="empty-sub">Try rephrasing your question</div>
+      </div>
+
+      <!-- Data table -->
+      <div class="result-block" *ngIf="result && !result.error && result.rowCount > 0 && !loading">
+        <div class="result-meta">
+          <span class="result-question">{{ result.question }}</span>
+          <div class="result-tags">
+            <span class="provider-tag">
+              {{ getIcon(result.provider) }} {{ result.providerDisplayName }}
+            </span>
+            <span class="result-count">{{ result.rowCount }} row{{ result.rowCount !== 1 ? 's' : '' }}</span>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th *ngFor="let col of result.columns">{{ col }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of result.rows; let i = index" [class.row-even]="i % 2 === 0">
+                <td *ngFor="let col of result.columns">{{ formatValue(row[col]) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Placeholder -->
+      <div class="state-placeholder" *ngIf="!result && !loading">
+        <div class="placeholder-icon">⬡</div>
+        <div class="placeholder-title">Ready to query</div>
+        <div class="placeholder-sub">
+          Select an AI provider from the sidebar, then type your question
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>

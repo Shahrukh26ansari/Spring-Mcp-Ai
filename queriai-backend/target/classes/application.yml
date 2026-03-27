@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/employee?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#  sql:
+#    init:
+#      mode: always
+#      schema-locations: classpath:schema.sql
+#      data-locations: classpath:data.sql
+
+  # ── AI Providers Configuration ─────────────────────────────
+  ai:
+
+    # ❌ Disabled providers (no API key issues)
+#    openai:
+#      enabled: false
+#      api-key: ${OPENAI_API_KEY:}
+#
+#    anthropic:
+#      enabled: false
+#      api-key: ${ANTHROPIC_API_KEY:}
+#
+#    vertex:
+#      ai:
+#        gemini:
+#          enabled: false
+#          project-id: ${GCP_PROJECT_ID:}
+#          location: us-central1
+
+    # ✅ Active provider (LOCAL - no API key needed)
+    ollama:
+      enabled: true
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: llama3.2
+          temperature: 0.0
+          max-tokens: 1024
+
+# ── Custom App Config ───────────────────────────────────────
+queriai:
+  default-provider: OLLAMA   # OPENAI | GEMINI | ANTHROPIC | OLLAMA
+
+server:
+  port: 8080
