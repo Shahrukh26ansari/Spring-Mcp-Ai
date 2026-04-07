@@ -1,0 +1,20 @@
+# --- Backend (STS/Eclipse) ---
+**/target/
+**/.classpath
+**/.project
+**/.settings/
+**/.factorypath
+**/*.class
+**/bin/
+
+# --- Frontend (VS Code/Web) ---
+**/node_modules/
+**/dist/
+**/.vscode/
+**/ui-test-results/
+**/.eslintcache
+**/.angular/cache/
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
