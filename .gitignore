@@ -13,7 +13,7 @@
 **/.vscode/
 **/ui-test-results/
 **/.eslintcache
-**/.angular/cache/
+**/.angular/
 
 # --- OS Specific ---
 .DS_Store
